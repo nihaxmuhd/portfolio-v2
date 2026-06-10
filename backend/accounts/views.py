@@ -38,7 +38,7 @@ class LogoutView(APIView):
         return Response({"detail": "Logged out."}, status=status.HTTP_200_OK)
 
 
-class MeView(APIView)
+class MeView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
