@@ -52,8 +52,8 @@ def create_admin(request):
 
     User.objects.create_superuser(
         username="admin",
-        email="your@email.com",
-        password="admin123"
+        email="muhammadnihad16@email.com",
+        password="@a#h$s12NS"
     )
 
     return Response({"message": "Admin created successfully"})
