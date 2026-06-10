@@ -43,17 +43,3 @@ class MeView(APIView):
 
     def get(self, request):
         return Response(UserSerializer(request.user).data)
-
-
-@api_view(["GET"])
-def create_admin(request):
-    if User.objects.filter(username="admin").exists():
-        return Response({"message": "Admin already exists"})
-
-    User.objects.create_superuser(
-        username="admin",
-        email="muhammadnihad16@email.com",
-        password="@a#h$s12NS"
-    )
-
-    return Response({"message": "Admin created successfully"})
