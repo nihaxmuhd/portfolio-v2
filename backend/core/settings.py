@@ -39,8 +39,9 @@ INSTALLED_APPS = [
 
 # ---------- Middleware ----------
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",  # must be first
+    "corsheaders.middleware.CorsMiddleware",  
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -71,7 +72,6 @@ WSGI_APPLICATION = "core.wsgi.application"
 ASGI_APPLICATION = "core.asgi.application"
 
 # ---------- Database ----------
-# Uses DATABASE_URL when present (production), otherwise SQLite (dev).
 DATABASES = {
     "default": dj_database_url.config(
         default="sqlite:///" + str(BASE_DIR / "db.sqlite3"),
@@ -96,6 +96,7 @@ USE_TZ = True
 # ---------- Static / Media ----------
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
