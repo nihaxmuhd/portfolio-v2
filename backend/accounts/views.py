@@ -4,12 +4,14 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from .serializers import LoginSerializer, UserSerializer
 
 
 class LoginView(APIView):
-    """POST /api/auth/login/ → { token, user }"""
-
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -28,8 +30,6 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
-    """POST /api/auth/logout/ — invalidates the user's token."""
-
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -38,10 +38,22 @@ class LogoutView(APIView):
         return Response({"detail": "Logged out."}, status=status.HTTP_200_OK)
 
 
-class MeView(APIView):
-    """GET /api/auth/me/ — returns the currently authenticated user."""
-
+class MeView(APIView)
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         return Response(UserSerializer(request.user).data)
+
+
+@api_view(["GET"])
+def create_admin(request):
+    if User.objects.filter(username="admin").exists():
+        return Response({"message": "Admin already exists"})
+
+    User.objects.create_superuser(
+        username="admin",
+        email="your@email.com",
+        password="admin123"
+    )
+
+    return Response({"message": "Admin created successfully"})
