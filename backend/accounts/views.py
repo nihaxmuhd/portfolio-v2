@@ -50,13 +50,14 @@ from rest_framework.response import Response
 
 @api_view(["GET"])
 def create_admin(request):
-    user = User.objects.create_superuser(
-        username="testadmin",
-        email="test@gmail.com",
-        password="test12345"
+
+    if User.objects.filter(username="admin").exists():
+        return Response({"message": "already exists"})
+
+    User.objects.create_superuser(
+        username="admin",
+        email="admin@gmail.com",
+        password="admin12345"
     )
 
-    return Response({
-        "message": "created",
-        "username": user.username
-    })
+    return Response({"message": "created"})
