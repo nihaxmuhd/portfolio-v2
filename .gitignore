@@ -1,16 +1,8 @@
-# Python
 venv/
-__pycache__/
-*.pyc
+.env
 db.sqlite3
-
-# React
+__pycache__/
 node_modules/
 dist/
-
-# Environment
-.env
-.env.local
-
-# VS Code
-.vscode/
+media/
+staticfiles/

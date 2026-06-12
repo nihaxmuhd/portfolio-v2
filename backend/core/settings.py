@@ -8,11 +8,8 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ---------- Security ----------
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "dev-insecure-change-me-4f9c2e1a8b6d5f7e0a3b2c1d8f6e9a0b",
-)
-DEBUG = os.environ.get("DEBUG", "1") == "1"
+SECRET_KEY = os.environ["SECRET_KEY"]
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = [
     h.strip()
@@ -125,6 +122,14 @@ _raw_origins = os.environ.get(
     "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173",
 )
 CORS_ALLOWED_ORIGINS = [o.strip() for o in _raw_origins.split(",") if o.strip()]
+CSRF_TRUSTED_ORIGINS = [
+    x.strip()
+    for x in os.getenv(
+        "CSRF_TRUSTED_ORIGINS",
+        ""
+    ).split(",")
+    if x.strip()
+]
 
 # ---------- Security in production ----------
 if not DEBUG:
