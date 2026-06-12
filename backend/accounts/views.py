@@ -41,3 +41,21 @@ class MeView(APIView):
 
     def get(self, request):
         return Response(UserSerializer(request.user).data)
+
+
+from django.contrib.auth.models import User
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+
+@api_view(["GET"])
+def create_admin(request):
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            email="muhammadnihad16@gmail.com",
+            password="@a#h$s12NS"
+        )
+        return Response({"message": "superuser created"})
+
+    return Response({"message": "already exists"})
