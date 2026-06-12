@@ -51,15 +51,6 @@ from rest_framework.response import Response
 User = get_user_model()
 
 @api_view(["GET"])
-def check_admin(request):
-    user = User.objects.filter(username="admin").first()
-
-    if not user:
-        return Response({"error": "not found"})
-
-    return Response({
-        "username": user.username,
-        "is_staff": user.is_staff,
-        "is_superuser": user.is_superuser,
-        "is_active": user.is_active
-    })
+def reset_users(request):
+    User.objects.all().delete()
+    return Response({"message": "all users deleted"})
