@@ -41,16 +41,3 @@ class MeView(APIView):
 
     def get(self, request):
         return Response(UserSerializer(request.user).data)
-
-
-
-from django.contrib.auth import get_user_model
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
-User = get_user_model()
-
-@api_view(["GET"])
-def reset_users(request):
-    User.objects.all().delete()
-    return Response({"message": "all users deleted"})
