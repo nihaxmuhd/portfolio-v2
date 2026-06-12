@@ -55,7 +55,7 @@ def create_admin(request):
         return Response({"message": "already exists"})
 
     User.objects.create_superuser(
-        username="admin",
+        username="admin1",
         email="admin@gmail.com",
         password="admin12345"
     )
