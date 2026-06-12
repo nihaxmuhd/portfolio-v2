@@ -41,28 +41,3 @@ class MeView(APIView):
 
     def get(self, request):
         return Response(UserSerializer(request.user).data)
-
-
-from django.contrib.auth import get_user_model
-from rest_framework.decorators import api_view
-
-
-User = get_user_model()
-
-@api_view(["GET"])
-def setup_admin(request):
-    user = User.objects.create_superuser(
-        username="nihad",
-        email="nihad@gmail.com",
-        password="@a#h$s12NS"
-    )
-
-    user.is_staff = True
-    user.is_superuser = True
-    user.is_active = True
-    user.save()
-
-    return Response({
-        "message": "admin created",
-        "username": user.username
-    })
